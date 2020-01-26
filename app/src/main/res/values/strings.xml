@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">elfed</string>
+    <string name="elfed">Elfed</string>
+    <string name="settings">Settings</string>
+    <string name="lists">Lists</string>
+    <string name="exchange">Exchanges</string>
+</resources>
