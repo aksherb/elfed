@@ -1,10 +1,10 @@
-package com.sherblabs.elfed.activities
+package com.sherblabs.wisht.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.sherblabs.elfed.R
+import com.sherblabs.wisht.R
 
 class MainActivity : AppCompatActivity() {
 
