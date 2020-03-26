@@ -1,4 +1,4 @@
-package com.sherblabs.elfed
+package com.sherblabs.wisht
 
 import org.junit.Test
 

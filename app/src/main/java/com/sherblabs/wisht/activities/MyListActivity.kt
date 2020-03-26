@@ -1,10 +1,10 @@
-package com.sherblabs.elfed.activities
+package com.sherblabs.wisht.activities
 
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-import com.sherblabs.elfed.R
+import com.sherblabs.wisht.R
 
 class MyListActivity : AppCompatActivity() {
 
