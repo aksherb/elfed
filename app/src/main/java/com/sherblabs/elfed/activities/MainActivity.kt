@@ -1,7 +1,8 @@
-package com.sherblabs.elfed
+package com.sherblabs.elfed.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.sherblabs.elfed.R
 
 class MainActivity : AppCompatActivity() {
 
