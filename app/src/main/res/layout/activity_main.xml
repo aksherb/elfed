@@ -27,7 +27,7 @@
         android:layout_height="88dp"
         android:layout_marginTop="32dp"
         android:fontFamily="@font/aclonica"
-        android:text="@string/elfed"
+        android:text="@string/title_wisht"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="#0B2905"
