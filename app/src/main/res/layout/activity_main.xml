@@ -61,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/abril_fatface"
+                android:onClick="viewMyList"
                 android:text="@string/button_my_list"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
