@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun viewMyList(view: View) {
+        // second test comment.
         val intent = Intent(this, MyListActivity::class.java)
         startActivity(intent)
     }
