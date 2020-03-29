@@ -1,12 +1,12 @@
 package com.sherblabs.wisht.activities
 
 import android.accounts.AccountManager
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import com.sherblabs.wisht.R
 import org.apache.commons.codec.binary.Hex
 import org.apache.commons.codec.digest.DigestUtils
@@ -14,7 +14,7 @@ import org.apache.commons.codec.digest.DigestUtils
 const val CURRENT_USERNAME_KEY = "current_user"
 const val DEFAULT_USERNAME = "default_user"
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // test comment.
