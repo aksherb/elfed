@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentTransaction
 import com.sherblabs.wisht.R
 
 class MyExchangeActivity : FragmentActivity(),
@@ -26,8 +27,17 @@ class MyExchangeActivity : FragmentActivity(),
      */
 
     fun onClickAddExchange(view: View) {
+        val fragmentManager = supportFragmentManager
         val newFragment = ExchangeDialogFragment()
-        newFragment.show(supportFragmentManager, "exchanges")
+        val transaction = fragmentManager.beginTransaction()
+
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+        // to make it fullscreen, use the 'content' root view as the container
+        // for the fragment, which is always the root view for the activity.
+        transaction
+            .add(android.R.id.content, newFragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     // fragment interface method implementation
