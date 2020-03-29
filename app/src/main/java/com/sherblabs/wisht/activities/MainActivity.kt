@@ -19,4 +19,9 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, MyListActivity::class.java)
         startActivity(intent)
     }
+
+    fun viewMyExchanges(view: View) {
+        val intent = Intent(this, MyExchangeActivity::class.java)
+        startActivity(intent)
+    }
 }
