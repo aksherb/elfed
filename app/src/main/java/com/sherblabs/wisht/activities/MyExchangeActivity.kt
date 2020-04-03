@@ -1,24 +1,34 @@
 package com.sherblabs.wisht.activities
 
-import android.app.AlertDialog
-import android.app.Dialog
-import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
+import androidx.activity.viewModels
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import com.sherblabs.wisht.R
+import kotlinx.android.synthetic.main.dialog_add_exchange.*
 
-class MyExchangeActivity : FragmentActivity(),
-        ExchangeDialogFragment.ExchangeDialogListener {
+class MyExchangeActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        /* Create an ExchangeViewModel the first time the system calls this activity's
+         * onCreate() method.
+         * Recreated activities receive the same MyExchangeViewModel instance created
+         * by the first activity
+         */
+        val model: MyExchangeViewModel by viewModels()
+        model.getExchanges().observe(this, Observer<List<Exchange>>{ exchanges ->
+            // update the UI.
+        })
+
+        // set content view for top level exchanges.
         setContentView(R.layout.activity_my_exchanges)
     }
 
@@ -28,58 +38,24 @@ class MyExchangeActivity : FragmentActivity(),
 
     fun onClickAddExchange(view: View) {
         val fragmentManager = supportFragmentManager
-        val newFragment = ExchangeDialogFragment()
+        val newFragment = ExchangeFragment()
         val transaction = fragmentManager.beginTransaction()
 
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
         // to make it fullscreen, use the 'content' root view as the container
         // for the fragment, which is always the root view for the activity.
         transaction
-            .add(android.R.id.content, newFragment)
+            .replace(android.R.id.content, newFragment)
             .addToBackStack(null)
             .commit()
     }
-
-    // fragment interface method implementation
-    override fun onDialogPositiveClick(dialog: DialogFragment) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    // fragment interface method implementation
-    override fun onDialogNegativeClick(dialog: DialogFragment) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
 }
 
-class ExchangeDialogFragment : DialogFragment() {
-    // Use this instance of the interface to deliver action events
-    internal lateinit var listener: ExchangeDialogListener
+class ExchangeFragment : Fragment() {
 
-    /*
-     * The activity that creates an instance of this dialog fragment
-     * must implement this interface to receive event callbacks.
-     */
-    interface ExchangeDialogListener {
-        fun onDialogPositiveClick(dialog: DialogFragment)
-        fun onDialogNegativeClick(dialog: DialogFragment)
-    }
+    private val model: MyExchangeViewModel by activityViewModels()
 
-    // override to instantiate the listener
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        // verify the host activity implemented the interface
-        try {
-            listener = context as ExchangeDialogListener
-        } catch (e: ClassCastException) {
-            // if the activity didn't implement the interface throw exception
-            throw ClassCastException((context.toString() +
-                    " must implement ExchangeDialogListener"))
-        }
-
-    }
-
+    // Called when Fragment should create its View object hierarchy.
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -88,22 +64,17 @@ class ExchangeDialogFragment : DialogFragment() {
         return inflater.inflate(R.layout.dialog_add_exchange, container, false)
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return activity?.let {
-            val builder = AlertDialog.Builder(it)
-            val inflater = requireActivity().layoutInflater
+    // This event is triggered soon after onCreateView()
+    // Any view setup should occur here. eg. attaching listeners.
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-            builder.setView(inflater.inflate(R.layout.dialog_add_exchange, null))
-                .setPositiveButton(android.R.string.ok,
-                    DialogInterface.OnClickListener { dialog, id ->
-                        listener.onDialogPositiveClick(this)
-                    })
-                .setNegativeButton(android.R.string.cancel,
-                    DialogInterface.OnClickListener { dialog, id ->
-                        listener.onDialogNegativeClick(this)
-                    })
+        activity?.okAddExchange?.setOnClickListener {
+            val name = addName.text.toString()
+        }
+        activity?.cancelAddExchange?.setOnClickListener {
+            // update the UI.
+        }
 
-            builder.create()
-        } ?: throw IllegalStateException("Activity cannot be NULL")
     }
 }

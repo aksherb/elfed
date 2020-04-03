@@ -6,4 +6,5 @@
     <string name="button_exchanges">Exchanges</string>
     <string name="create_exchange">Create Exchange</string>
     <string name="name">Name</string>
+    <string name="create_deadline">Create Deadline</string>
 </resources>
