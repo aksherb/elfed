@@ -2,7 +2,6 @@ package com.sherblabs.wisht.controllers
 
 import android.util.Log
 import com.google.firebase.database.*
-import com.sherblabs.wisht.activities.MyListActivity
 
 class WishListController(
     username: String,
@@ -15,23 +14,22 @@ class WishListController(
     }
 
     fun add(value: String) {
-        val myRef = dbList.push()
-        myRef.setValue(value)
+        dbList.child(value).setValue(value)
+    }
+
+    fun remove(value: String) {
+        dbList.child(value).removeValue()
     }
 
     private fun onDataChange() {
         dbList.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val map = dataSnapshot.getValue(object : GenericTypeIndicator<Map<String, String>>() {})
-                if (map != null) {
-                    onDataChangeCallback(map.values.toList())
-                } else {
-                    Log.w(MyListActivity::class.java.toString(), "Map is null.")
-                }
+                onDataChangeCallback(map?.values?.toList().orEmpty())
             }
             override fun onCancelled(error: DatabaseError) {
                 // Failed to read value
-                Log.w(MyListActivity::class.java.toString(), "Failed to read value.", error.toException())
+                Log.w(WishListController::class.java.toString(), "Failed to read value.", error.toException())
             }
         })
     }
