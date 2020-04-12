@@ -10,26 +10,48 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sherblabs.wisht.R
+import com.sherblabs.wisht.models.Exchange
+import com.sherblabs.wisht.models.MyExchangeViewModel
+import kotlinx.android.synthetic.main.activity_my_exchanges.*
 import kotlinx.android.synthetic.main.dialog_add_exchange.*
 
 class MyExchangeActivity : FragmentActivity() {
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewManager: RecyclerView.LayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // set content view for top level exchanges.
+        setContentView(R.layout.activity_my_exchanges)
+
+       // viewManager = LinearLayoutManager(this)
+       // viewAdapter = exchangeAdapter(allExchanges)
+       // recyclerView = exchangeRecycler.apply {
+            // use this setting to improve performance if you know that changes
+            // in content do not change the layout size of the RecyclerView
+       //     setHasFixedSize(true)
+
+       //     layoutManager = viewManager
+       //     adapter = viewAdapter
+       // }
 
         /* Create an ExchangeViewModel the first time the system calls this activity's
          * onCreate() method.
          * Recreated activities receive the same MyExchangeViewModel instance created
          * by the first activity
          */
-        val model: MyExchangeViewModel by viewModels()
-        model.getExchanges().observe(this, Observer<List<Exchange>>{ exchanges ->
-            // update the UI.
-        })
-
-        // set content view for top level exchanges.
-        setContentView(R.layout.activity_my_exchanges)
+      //  val model: MyExchangeViewModel by viewModels()
+      //  val liveData = model.getObservableExchanges("TEST")
+      //  liveData.observe(this, Observer<List<Exchange>> {
+      //      if (it != null) {
+      //          // add item to list.
+       //     }
+       // })
     }
 
     /*
