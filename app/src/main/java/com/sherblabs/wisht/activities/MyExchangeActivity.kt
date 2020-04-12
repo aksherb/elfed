@@ -1,9 +1,11 @@
 package com.sherblabs.wisht.activities
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -17,6 +19,7 @@ import com.sherblabs.wisht.models.Exchange
 import com.sherblabs.wisht.models.MyExchangeViewModel
 import kotlinx.android.synthetic.main.activity_my_exchanges.*
 import kotlinx.android.synthetic.main.dialog_add_exchange.*
+import kotlinx.android.synthetic.main.list_item.view.*
 
 class MyExchangeActivity : FragmentActivity() {
     private lateinit var recyclerView: RecyclerView
@@ -29,27 +32,31 @@ class MyExchangeActivity : FragmentActivity() {
         // set content view for top level exchanges.
         setContentView(R.layout.activity_my_exchanges)
 
-       // viewManager = LinearLayoutManager(this)
-       // viewAdapter = exchangeAdapter(allExchanges)
-       // recyclerView = exchangeRecycler.apply {
+        val myExchanges: ArrayList<Exchange> = ArrayList()
+        //loadExchanges()
+
+        viewManager = LinearLayoutManager(this)
+        viewAdapter = ExchangeAdapter(myExchanges, this)
+        recyclerView = exchangeRecycler.apply {
             // use this setting to improve performance if you know that changes
             // in content do not change the layout size of the RecyclerView
-       //     setHasFixedSize(true)
+            setHasFixedSize(true)
 
-       //     layoutManager = viewManager
-       //     adapter = viewAdapter
-       // }
+            layoutManager = viewManager
+            adapter = viewAdapter
+        }
 
         /* Create an ExchangeViewModel the first time the system calls this activity's
          * onCreate() method.
          * Recreated activities receive the same MyExchangeViewModel instance created
          * by the first activity
          */
-      //  val model: MyExchangeViewModel by viewModels()
-      //  val liveData = model.getObservableExchanges("TEST")
-      //  liveData.observe(this, Observer<List<Exchange>> {
-      //      if (it != null) {
-      //          // add item to list.
+       // val model: MyExchangeViewModel by viewModels()
+       // val liveData = model.getObservableExchanges("TEST")
+       // liveData.observe(this, Observer<List<Exchange>> {
+       //     if (it != null) {
+                // add items to list.
+                //viewAdapter.setExchangesData(it)
        //     }
        // })
     }
@@ -73,6 +80,34 @@ class MyExchangeActivity : FragmentActivity() {
     }
 }
 
+class ExchangeAdapter(val items: ArrayList<Exchange>, val context: Context)
+    : RecyclerView.Adapter<ViewHolder>() {
+
+    // inflates the item view
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_item, parent, false))
+    }
+
+    // binds each item in the list to a view
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.itemType.text = items[position].name
+    }
+
+    // returns the number of items in the list
+    override fun getItemCount(): Int {
+        return items.size
+    }
+}
+
+class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    // holds the textView for each exchange.
+    val itemType: TextView = view.textView
+}
+
+/*
+ * Fragment that allows user provided input on a new Exchange.
+ * Uses entire parent view space.
+ */
 class ExchangeFragment : Fragment() {
 
     private val model: MyExchangeViewModel by activityViewModels()
