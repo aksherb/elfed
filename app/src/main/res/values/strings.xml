@@ -3,8 +3,10 @@
     <string name="title_wisht">wisht</string>
     <string name="settings">Settings</string>
     <string name="button_my_list">My List</string>
-    <string name="button_exchanges">Exchanges</string>
-    <string name="create_exchange">Create Exchange</string>
     <string name="name">Name</string>
     <string name="create_deadline">Create Deadline</string>
+    <string name="list_item_deleted">Deleted</string>
+    <string name="list_item_undo_delete">Undo</string>
+    <string name="button_exchanges">Exchanges</string>
+    <string name="create_exchange">Create Exchange</string>
 </resources>

@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="10dp">
+    android:id="@+id/lyt_container"
+    android:background="@color/gray_background">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp" />
+        android:height="@dimen/list_item_height"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/list_item_padding_sides"
+        android:paddingRight="@dimen/list_item_padding_sides"
+        android:id="@+id/textView"
+        android:background="@android:color/white"/>
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="3"
+        android:height="@dimen/list_item_height"
+        android:paddingLeft="@dimen/list_item_padding_sides"
+        android:paddingRight="@dimen/list_item_padding_sides">
+
+        <TextView
+            android:id="@+id/txt_delete"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:clickable="false"
+            android:gravity="center_vertical"
+            android:hapticFeedbackEnabled="true"
+            android:text="@string/list_item_deleted"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:id="@+id/txt_undo"
+            android:text="@string/list_item_undo_delete"
+            android:clickable="false"
+            android:layout_weight="1"
+            android:textColor="@color/yellow"/>
+
+    </LinearLayout>
+
+</FrameLayout>
