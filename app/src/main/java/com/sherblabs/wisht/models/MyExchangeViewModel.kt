@@ -14,10 +14,15 @@ class MyExchangeViewModel : ViewModel() {
     fun getObservableExchanges(name: String) : LiveData<List<Exchange>> {
        return repository.getExchanges(name)
     }
+
+    fun addNewExchange(exchange: Exchange) {
+        repository.addExchange(exchange)
+    }
 }
 
 interface ExchangeRepository {
     fun getExchanges(name: String): MutableLiveData<List<Exchange>>
+    fun addExchange(exchange: Exchange)
 }
 
 object FSExchangeRepository : ExchangeRepository {
@@ -45,6 +50,13 @@ object FSExchangeRepository : ExchangeRepository {
 
         exchanges.value = data
         return exchanges
+    }
+
+    override fun addExchange(exchange: Exchange) {
+        fsdb.collection("exchanges").document(exchange.name)
+            .set(exchange)
+            .addOnSuccessListener { Log.d(TAG, "Document successfully written") }
+            .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
     }
 
     fun getInstance() : FSExchangeRepository {

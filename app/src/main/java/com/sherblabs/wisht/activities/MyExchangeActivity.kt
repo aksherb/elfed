@@ -2,6 +2,7 @@ package com.sherblabs.wisht.activities
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,7 @@ import kotlinx.android.synthetic.main.list_item.view.*
 
 class MyExchangeActivity : FragmentActivity() {
     private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewAdapter: ExchangeAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +34,6 @@ class MyExchangeActivity : FragmentActivity() {
         setContentView(R.layout.activity_my_exchanges)
 
         val myExchanges: ArrayList<Exchange> = ArrayList()
-        //loadExchanges()
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = ExchangeAdapter(myExchanges, this)
@@ -51,14 +51,14 @@ class MyExchangeActivity : FragmentActivity() {
          * Recreated activities receive the same MyExchangeViewModel instance created
          * by the first activity
          */
-       // val model: MyExchangeViewModel by viewModels()
-       // val liveData = model.getObservableExchanges("TEST")
-       // liveData.observe(this, Observer<List<Exchange>> {
-       //     if (it != null) {
+        val model: MyExchangeViewModel by viewModels()
+        val liveData = model.getObservableExchanges("ALLISON")
+        liveData.observe(this, Observer<List<Exchange>> {
+            if (it != null) {
                 // add items to list.
-                //viewAdapter.setExchangesData(it)
-       //     }
-       // })
+                viewAdapter.setExchangesData(it)
+            }
+        })
     }
 
     /*
@@ -74,8 +74,8 @@ class MyExchangeActivity : FragmentActivity() {
         // to make it fullscreen, use the 'content' root view as the container
         // for the fragment, which is always the root view for the activity.
         transaction
-            .replace(android.R.id.content, newFragment)
-            .addToBackStack(null)
+            .replace(android.R.id.content, newFragment, "exchangeFragment")
+            .addToBackStack("exchangeFragment")
             .commit()
     }
 }
@@ -88,7 +88,7 @@ class ExchangeAdapter(val items: ArrayList<Exchange>, val context: Context)
         return ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_item, parent, false))
     }
 
-    // binds each item in the list to a view
+    // binds each item in the list to a view and sets the text to the exchange name.
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemType.text = items[position].name
     }
@@ -96,6 +96,10 @@ class ExchangeAdapter(val items: ArrayList<Exchange>, val context: Context)
     // returns the number of items in the list
     override fun getItemCount(): Int {
         return items.size
+    }
+
+    fun setExchangesData(items: List<Exchange>) {
+        Log.d("ExchangeAdapter", "setExchangesData called!")
     }
 }
 
@@ -128,9 +132,10 @@ class ExchangeFragment : Fragment() {
 
         activity?.okAddExchange?.setOnClickListener {
             val name = addName.text.toString()
+            model.addNewExchange(Exchange(name))
         }
         activity?.cancelAddExchange?.setOnClickListener {
-            // update the UI.
+
         }
 
     }
