@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/exchangesView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#CD143C06"
+    android:clickable="false">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/exchangeRecycler"
@@ -19,10 +20,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:alpha="100"
         android:clickable="true"
         android:focusable="true"
         android:onClick="onClickAddExchange"
+        app:backgroundTint="#0B2905"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:rippleColor="#BCBCBC"
         app:srcCompat="@drawable/ic_add_white_24dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,7 +9,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 class MyExchangeViewModel : ViewModel() {
     private val TAG = "MyExchangeViewModel"
     private val repository = FSExchangeRepository.getInstance()
-    private val observableExchanges = MutableLiveData<List<Exchange>>()
 
     fun getObservableExchanges(name: String) : LiveData<List<Exchange>> {
        return repository.getExchanges(name)

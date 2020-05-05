@@ -8,10 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.activityViewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.*
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_my_exchanges.*
 import kotlinx.android.synthetic.main.dialog_add_exchange.*
 import kotlinx.android.synthetic.main.list_item.view.*
 
-class MyExchangeActivity : FragmentActivity() {
+class MyExchangeActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: ExchangeAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
@@ -53,11 +51,9 @@ class MyExchangeActivity : FragmentActivity() {
          */
         val model: MyExchangeViewModel by viewModels()
         val liveData = model.getObservableExchanges("ALLISON")
-        liveData.observe(this, Observer<List<Exchange>> {
-            if (it != null) {
-                // add items to list.
-                viewAdapter.setExchangesData(it)
-            }
+        liveData.observe(this, Observer {
+            // add items to list.
+            viewAdapter.setExchangesData(it)
         })
     }
 
@@ -68,15 +64,16 @@ class MyExchangeActivity : FragmentActivity() {
     fun onClickAddExchange(view: View) {
         val fragmentManager = supportFragmentManager
         val newFragment = ExchangeFragment()
-        val transaction = fragmentManager.beginTransaction()
+        newFragment.show(fragmentManager, "exchangeFragment")
+        /*val transaction = fragmentManager.beginTransaction()
 
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
         // to make it fullscreen, use the 'content' root view as the container
         // for the fragment, which is always the root view for the activity.
         transaction
-            .replace(android.R.id.content, newFragment, "exchangeFragment")
+            .replace(R.id.exchangesView, newFragment, "exchangeFragment")
             .addToBackStack("exchangeFragment")
-            .commit()
+            .commit()*/
     }
 }
 
@@ -112,8 +109,7 @@ class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
  * Fragment that allows user provided input on a new Exchange.
  * Uses entire parent view space.
  */
-class ExchangeFragment : Fragment() {
-
+class ExchangeFragment : DialogFragment() {
     private val model: MyExchangeViewModel by activityViewModels()
 
     // Called when Fragment should create its View object hierarchy.
@@ -133,10 +129,8 @@ class ExchangeFragment : Fragment() {
         activity?.okAddExchange?.setOnClickListener {
             val name = addName.text.toString()
             model.addNewExchange(Exchange(name))
-        }
-        activity?.cancelAddExchange?.setOnClickListener {
 
+            fragmentManager?.beginTransaction()?.remove(this)?.commit()
         }
-
     }
 }
