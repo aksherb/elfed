@@ -30,6 +30,11 @@ class MainActivity : Activity() {
         startActivity(intent)
     }
 
+    fun viewMyExchanges(view: View) {
+        val intent = Intent(this, MyExchangeActivity::class.java)
+        startActivity(intent)
+    }
+
     private fun setupUser() {
         if (!currentUserIsSet()) {
             askForUserAccount()

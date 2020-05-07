@@ -11,6 +11,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
         <activity android:name="com.sherblabs.wisht.activities.MyListActivity" >
         </activity>
+        <activity android:name="com.sherblabs.wisht.activities.MyExchangeActivity" />
         <activity android:name="com.sherblabs.wisht.activities.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -72,6 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/abril_fatface"
+                android:onClick="viewMyExchanges"
                 android:text="@string/button_exchanges"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
